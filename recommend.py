@@ -81,7 +81,7 @@ def find_predictor(user, restaurants, feature_fn):
     on the items in RESTAURANTS. Also, return the R^2 value of this model.
 
     Arguments:
-    user -- A user
+    user -- A use
     restaurants -- A sequence of restaurants
     feature_fn -- A function that takes a restaurant and returns a number
     """
@@ -89,7 +89,25 @@ def find_predictor(user, restaurants, feature_fn):
     reviews_by_user = {review_restaurant_name(review): review_rating(review)
                        for review in user_reviews(user).values()}
 
-    
+    xs = [feature_fn(r) for r in restaurants]
+    ys = [reviews_by_user[restaurant_name(r)] for r in restaurants]
+
+    sxx_list = [r - mean(xs) for r in xs]
+    syy_list = [r - mean(ys) for r in ys]
+    sxy_list = zip(sxx_list, syy_list)
+
+    # sxx = Σi (xi - mean(x))^2
+    sxx = sum([pow(r, 2) for r in sxx_list])
+    # syy = Σi (yi - mean(y))^2
+    syy = sum([pow(r, 2) for r in syy_list])
+    # sxy = Σi (xi - mean(x)) (yi - mean(y))
+    sxy = sum([r[0] * r[1] for r in sxy_list])
+
+    # y = a + bx
+    b = sxy/ sxx
+    a = mean(ys) - b * mean(xs)
+    r_squared = pow(sxy, 2) / (sxx * syy) # measures how accurately this line describes original data
+
     def predictor(restaurant):
         return b * feature_fn(restaurant) + a
 
@@ -106,6 +124,8 @@ def best_predictor(user, restaurants, feature_fns):
     """
     reviewed = list(user_reviewed_restaurants(user, restaurants).values())
     
+    best_func = max(feature_fns, key = lambda x: find_predictor(user, reviewed, x)[1])
+    return find_predictor(user, reviewed, best_func)[0]
 
 
 def rate_all(user, restaurants, feature_functions):
@@ -121,6 +141,16 @@ def rate_all(user, restaurants, feature_functions):
     predictor = best_predictor(user, RESTAURANTS, feature_functions)
     reviewed_res = user_reviewed_restaurants(user, restaurants)
 
+    r_user = {}
+
+    for r in restaurants.keys():
+        if r in reviewed_res.keys():
+            new = {r: user_rating(user,r)}
+            r_user.update(new)
+        else:
+            new = {r: predictor(restaurants.get(r))}
+            r_user.update(new)
+    return r_user 
 
 
 def search(query, restaurants):
@@ -130,7 +160,8 @@ def search(query, restaurants):
     query -- A string
     restaurants -- A sequence of restaurants
     """
-    
+    return [r for r in restaurants if query in restaurant_categories(r)]
+
 
 def feature_set():
     """Return a sequence of feature functions."""
