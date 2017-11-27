@@ -52,23 +52,30 @@ def make_restaurant(name, location, categories, price, reviews):
     """Return a restaurant, implemented as a dictionary."""
     # You may change this starter implementation however you wish, including
     # adding more items to the dictionary below.
-    
+    return {'name': name, 
+            'location':location, 
+            'categories': categories, 
+            'price': price, 
+            'reviews': reviews}
 
 def restaurant_name(restaurant):
-    
+    return restaurant['name']
+
 
 def restaurant_location(restaurant):
-    
+    return restaurant['location']
+
 
 def restaurant_categories(restaurant):
-    
+    return restaurant['categories']
 
 def restaurant_price(restaurant):
-    
+    return restaurant['price']
+
 
 def restaurant_ratings(restaurant):
     """Return a list of ratings (numbers from 1 to 5)."""
-    
+    return [review_rating(x) for x in restaurant['reviews']]
 
 ### === +++ RESTAURANT ABSTRACTION BARRIER +++ === ###
 
