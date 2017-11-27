@@ -1,8 +1,6 @@
 # Maps
-======
 
 ## Overview
-======
 This Python project is a visualisation of restaurant ratings using machine learning and the [Yelp academic dataset](https://www.yelp.com/academic_dataset". This projects Berkeley into segmented regions, where each regin is shaded by the predicted rating of the spatially closest restaurant. It is further coded with yellow being 5 stars and blue being 1 stars. The visualisation that appears is a Voronoi diagram.
 
 Dots on the map are repsesentitve of restaurants. They're coloured depending on their spatial relationship to others, or clustering. For example, the green dots are those clustered in Downtown Berkeley and the blue dots are those notrh of UC Berkeley's campus.
@@ -20,7 +18,6 @@ This repo contains all the documents for completing this project. Each file's re
    * visualize: A directory of tools for drawing the final visualization
 
 ## Phase 0: Utilities
-======
 ### Problem 0
 All changes are made in `utils.py`
 #### Problem 0.1: Using List Comprehensions
@@ -61,14 +58,12 @@ Functionality: takes in a sequence of numbers
 Returns: arithmetic mean
 
 ## Phase 1: Data Abstraction
-======
 All chages are made in `abstractions.py`
 ### Problem 2
-What: `make_restaurant`, `restaurant_name`, `restaurant_location, `restaurant_categories`, `restaurant_price`, `restaurant_price`, `restaurant_ratings`
+What: `make_restaurant`, `restaurant_name`, `restaurant_location`, `restaurant_categories`, `restaurant_price`, `restaurant_price`, `restaurant_ratings`
 Functionality: Completes the implementations of the constructure and selectors for the restaurant data abstraction
 
 ## Phase 2: Unsupervised Learning
-======
 All changes are made in `recommend.py`
 
 The **k-means algorithm** discovers the centers of clusters. It finds `k` centroids within a dataset that each correspond to a cluster of inputs by randomly selecting a `k` centroid and testing it.
@@ -94,7 +89,6 @@ Functionality: grouping `restaurants` into clusters of the same centroid and bin
 Returns: `centroids`
 
 ## Phase 3: Supervised Learning
-======
 All changes are made in `recommended.py`
 ### Problem 7
 The *simple least squares linear regression* is a statistical method that approximates the relationship between some input feature and an output value within a line. In a relevant example, it would approximate the correlation to price and rating. It finds the approximation by computing the slope and interept of the line that minimizes the mean of the squared difference between the line and the outputs.
