@@ -24,17 +24,16 @@ All changes are made in `utils.py`
 A list comprehension comprehension constructs a new list from an existing sequence. It filters the given sequence, then computes an element of the result for each remaining element that is not filtered out. The syntax looks the following:
 `[<map expression> for <name> in <sequence expressions> if <filter expressions>]`
 
-What: `map_and_filter` function 
-Functionality: Takes in a sequence `s`, a one-argument function `map_fn` and a one-argument function `filter_fn`
-Returns: a new list containing the result of calling `map_fn` on each element of `s` for which `filter_fn` returns a true value
+* What: `map_and_filter` function 
+* Functionality: Takes in a sequence `s`, a one-argument function `map_fn` and a one-argument function `filter_fn`
+* Returns: a new list containing the result of calling `map_fn` on each element of `s` for which `filter_fn` returns a true value
 
 #### Problem 0.2: Using `min`
 The `key` function is a one-argument function that is called with each element of the list, and the return valies are used for comparison.
 
-What: `key_of_min_value` function
-
-Functionality: takes in a doctionary `d`
-Returns: key that corresponds to the minimum value in `d`
+* What: `key_of_min_value` function
+* Functionality: takes in a doctionary `d`
+* Returns: key that corresponds to the minimum value in `d`
 
 #### Problem 0.3 Using `zip`
 The `zip` function take multiple sequences as arguments and returns lists of lists, where the n-th list contains the n-th element from the original list. 
@@ -108,7 +107,7 @@ How to compute the simple least squares linear regression is within the code its
 `-q` allows you to filter based on a category.
 
 Try running the following to see a visualisaition of all sandwich restaurants and their predicted ratings for the user who `likes_expensive`:
-> python3 recommend.py -u likes_expensive -k 2 -p -q Sandwiches
+> `python3 recommend.py -u likes_expensive -k 2 -p -q Sandwiches`
 
 ## How to predict your own ratings
 In the users dictionary, there are .dat files. Personally, I don't know how to open--let alone--these files. However, you can edit your own reviews of restaurants and get your predictions!
