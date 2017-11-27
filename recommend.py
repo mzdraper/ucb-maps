@@ -13,7 +13,8 @@ def find_closest(location, centroids):
     >>> find_closest([3, 4], [[0, 0], [2, 3], [4, 3], [5, 5]])
     [2, 3]
     """
-    
+    return min(centroids, key = lambda x: distance(location, x))
+
 
 def group_by_first(pairs):
     """Return a list of pairs that relates each unique key in [key, value]
@@ -41,14 +42,23 @@ def group_by_centroid(restaurants, centroids):
     No empty lists should appear in the result.
     """
     ##have to organize the coordinates by centroids.
-    
+    def r_centroid(r):
+        return [find_closest(restaurant_location(r), centroids)]
+    lst = [[r_centroid(r), r] for r in restaurants]
 
     return group_by_first(lst)
 
+
 def find_centroid(restaurants):
     """Return the centroid of the locations of RESTAURANTS."""
+    def get_lat(restaurants):
+        return [restaurant_location(x)[0] for x in restaurants]
+    def get_long(restaurants):
+        return [restaurant_location(x)[1] for x in restaurants]
 
+    return [mean(get_lat(restaurants)), mean(get_long(restaurants))]
     
+
 def k_means(restaurants, k, max_updates=100):
     """Use k-means to group RESTAURANTS by location into K clusters."""
     assert len(restaurants) >= k, 'Not enough restaurants to cluster'
@@ -59,6 +69,8 @@ def k_means(restaurants, k, max_updates=100):
     while old_centroids != centroids and n < max_updates:
         old_centroids = centroids
 
+        res_list = group_by_centroid(restaurants, centroids)
+        centroids = [find_centroid(r) for r in res_list]
         
         n += 1
     return centroids
@@ -77,11 +89,7 @@ def find_predictor(user, restaurants, feature_fn):
     reviews_by_user = {review_restaurant_name(review): review_rating(review)
                        for review in user_reviews(user).values()}
 
-    xs = [feature_fn(r) for r in restaurants]
-    ys = [reviews_by_user[restaurant_name(r)] for r in restaurants]
-
     
-
     def predictor(restaurant):
         return b * feature_fn(restaurant) + a
 
